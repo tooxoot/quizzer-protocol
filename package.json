@@ -1,5 +1,10 @@
 {
-  "name": "quizzer-protocol",
+  "name": "@tooxoot/quizzer-protocol",
+  "description": "message types and convinience methods for quizzer's websocket protocols",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tooxoot/quizzer-protocol"
+  },
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
