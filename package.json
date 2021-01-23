@@ -3,7 +3,7 @@
   "description": "message types and convinience methods for quizzer's websocket protocols",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tooxoot/quizzer-protocol"
+    "url": "git@github.com:tooxoot/quizzer-protocol.git"
   },
   "version": "1.0.0",
   "license": "MIT",
