@@ -114,4 +114,25 @@ export namespace QuizzerProtocol {
       export const parse = parser<Message>(Object.values(TYPES))
     }
   }
+
+  export interface State {
+    catalogue: State.Catalogue
+    givenAnswers: State.GivenAnswers
+    currentQuestionIdx: number
+  }
+
+  export namespace State {
+    export interface Question {
+      id: string
+      prompt: string
+      answers: string[]
+      rightAnswer?: number
+    }
+
+    export interface Catalogue {
+      questions: Question[]
+    }
+
+    export interface GivenAnswers extends Record<string, number[]> {}
+  }
 }
