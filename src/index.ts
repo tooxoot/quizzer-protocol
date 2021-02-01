@@ -77,11 +77,10 @@ export namespace QuizzerProtocol {
   }
 
   export namespace Server {
-    export type Message =
-      | Message.Pong
-      | Message.ShowQuestion
-      | Message.ShowAnswer
-      | Message.ShowLeaderboard
+    export type Message = {
+      type: Message.TYPES
+      state: State
+    }
 
     export namespace Message {
       export enum TYPES {
@@ -90,27 +89,6 @@ export namespace QuizzerProtocol {
         SHOW_LEADER_BOARD = 'SHOW_LEADER_BOARD',
         SHOW_ANSWER = 'SHOW_ANSWER',
       }
-
-      export interface Pong {
-        type: Message.TYPES.PONG
-      }
-
-      export interface ShowQuestion {
-        type: Message.TYPES.SHOW_QUESTION
-        idx: number
-      }
-
-      export interface ShowAnswer {
-        type: Message.TYPES.SHOW_ANSWER
-        revealAnswer?: boolean
-        givenAnswer?: number
-      }
-
-      export interface ShowLeaderboard {
-        type: Message.TYPES.SHOW_LEADER_BOARD
-        leaderBoard: [string, ...number[]][]
-      }
-
       export const parse = parser<Message>(Object.values(TYPES))
     }
   }
@@ -119,6 +97,10 @@ export namespace QuizzerProtocol {
     catalogue: State.Catalogue
     givenAnswers: State.GivenAnswers
     currentQuestionIdx: number
+    showLeaderBoard: boolean
+    timestamp: number
+    showRightAnswers: boolean
+    leaderBoard: State.Leaderboard
   }
 
   export namespace State {
@@ -133,6 +115,28 @@ export namespace QuizzerProtocol {
       questions: Question[]
     }
 
-    export interface GivenAnswers extends Record<string, number[]> {}
+    export interface GivenAnswers extends Record<string, number> {}
+
+    export interface Leaderboard extends Record<string, Leaderboard.Entry> {}
+
+    export namespace Leaderboard {
+      export interface Entry {
+        givenAnswer: GivenAnswers
+        total: number
+      }
+    }
+
+    export interface GivenAnswer {
+      idx: number
+      status: GivenAnswer.STATUS
+    }
+
+    export namespace GivenAnswer {
+      export enum STATUS {
+        RIGHT = 'RIGHT',
+        WRONG = 'WRONG',
+        UNGRADED = 'UNGRADED',
+      }
+    }
   }
 }
