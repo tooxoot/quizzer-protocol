@@ -95,17 +95,20 @@ export namespace QuizzerProtocol {
 
   export interface State {
     catalogue: State.Catalogue
-    givenAnswers: State.GivenAnswers
     currentQuestionIdx: number
-    showLeaderBoard: boolean
-    timestamp: number
-    showRightAnswers: boolean
     leaderBoard: State.Leaderboard
+    lockQuestion: boolean
+    showLeaderBoard: boolean
+    showRightAnswers: boolean
+    timestamp: number
   }
 
   export namespace State {
+    type QuestionId = string
+    type UserId = string
+
     export interface Question {
-      id: string
+      id: QuestionId
       prompt: string
       answers: string[]
       rightAnswer?: number
@@ -115,13 +118,13 @@ export namespace QuizzerProtocol {
       questions: Question[]
     }
 
-    export interface GivenAnswers extends Record<string, number> {}
+    export interface GivenAnswers extends Record<QuestionId, number> {}
 
-    export interface Leaderboard extends Record<string, Leaderboard.Entry> {}
+    export interface Leaderboard extends Record<UserId, Leaderboard.Entry> {}
 
     export namespace Leaderboard {
       export interface Entry {
-        givenAnswer: GivenAnswers
+        givenAnswers: GivenAnswers
         total: number
       }
     }
